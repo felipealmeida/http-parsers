@@ -1,0 +1,2 @@
+
+use-project boost : ../boost_1_55_0 ;

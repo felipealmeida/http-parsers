@@ -1,0 +1,14 @@
+
+import testing : run ;
+
+project http-parsers ;
+
+alias http-parsers : /boost//headers : : : <include>include
+ <toolset>gcc:<cxxflags>-Wno-unused-local-typedefs
+ <c++-template-depth>1000
+ ;
+
+alias tests :
+ [ run tests/request_line.cpp http-parsers ]
+ ;
+
