@@ -8,16 +8,16 @@
 #ifndef HTTP_PARSERS_HTTP_HTTP_VERSION_HPP
 #define HTTP_PARSERS_HTTP_HTTP_VERSION_HPP
 
-#include <boost/spirit/home/qi.hpp>
+#include <http-parsers/nonterminal.hpp>
 
 namespace http_parsers { namespace http {
 
-template <typename Iterator, typename Attribute>
-struct http_version : qi::grammar<Iterator, Attribute()>
+template <typename Domain, typename Iterator, typename Attribute>
+struct http_version : http_parsers::grammar<Domain, Iterator, Attribute()>::type
 {
   http_version();
 
-  qi::rule<Iterator, Attribute()> start;
+  typename http_parsers::rule<Domain, Iterator, Attribute()>::type start;
 };
 
 } }

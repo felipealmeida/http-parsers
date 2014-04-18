@@ -10,6 +10,8 @@
 
 #include <boost/type_traits/remove_reference.hpp>
 
+#include <boost/fusion/include/at.hpp>
+
 namespace http_parsers {
 
 template <typename Attribute, unsigned int I>

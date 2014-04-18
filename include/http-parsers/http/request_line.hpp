@@ -21,18 +21,18 @@ namespace http_parsers { namespace http {
 namespace qi = boost::spirit::qi;
 namespace fusion = boost::fusion;
 
-template <typename Iterator, typename Attribute>
-struct request_line : qi::grammar<Iterator, Attribute()>
+template <typename Domain, typename Iterator, typename Attribute>
+struct request_line : http_parsers::grammar<Domain, Iterator, Attribute()>::type
 {
   request_line();
 
-  //typedef typename attribute_at_c<Attribute, 0u>::type token_attribute_type;
+  typedef typename attribute_at_c<Attribute, 0u>::type token_attribute_type;
   typedef typename attribute_at_c<Attribute, 1u>::type request_uri_attribute_type;
   typedef typename attribute_at_c<Attribute, 2u>::type http_version_attribute_type;
-  qi::rule<Iterator, Attribute()> start;
-  http::token<Iterator, /*token_attribute_type*/void> token;
-  http::request_uri<Iterator, /*request_uri_attribute_type*/void> request_uri;
-  http::http_version<Iterator, http_version_attribute_type> http_version;
+  typename http_parsers::rule<Domain, Iterator, Attribute()>::type start;
+  http::token<Domain, Iterator, token_attribute_type> token;
+  http::request_uri<Domain, Iterator, request_uri_attribute_type> request_uri;
+  http::http_version<Domain, Iterator, http_version_attribute_type> http_version;
 };
 
 } }

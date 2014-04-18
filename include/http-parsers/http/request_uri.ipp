@@ -9,11 +9,11 @@
 
 namespace http_parsers { namespace http {
 
-template <typename Iterator, typename Attribute>
-request_uri<Iterator, Attribute>::request_uri()
+template <typename Domain, typename Iterator, typename Attribute>
+request_uri<Domain, Iterator, Attribute>::request_uri()
   : request_uri::base_type(start)
 {
-  start %= absolute_uri /*| relative_uri*/;
+  start %= absolute_uri | relative_uri;
   
   start.name("request_uri"); debug(start);
 }

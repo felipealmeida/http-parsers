@@ -8,18 +8,16 @@
 #ifndef HTTP_PARSERS_HTTP_TOKEN_HPP
 #define HTTP_PARSERS_HTTP_TOKEN_HPP
 
-#include <boost/spirit/home/qi.hpp>
+#include <http-parsers/nonterminal.hpp>
 
 namespace http_parsers { namespace http {
 
-namespace qi = boost::spirit::qi;
-
-template <typename Iterator, typename Attribute>
-struct token : qi::grammar<Iterator, Attribute()>
+template <typename Domain, typename Iterator, typename Attribute>
+struct token : http_parsers::grammar<Domain, Iterator, Attribute()>::type
 {
   token();
 
-  qi::rule<Iterator, Attribute()> start;
+  typename http_parsers::rule<Domain, Iterator, Attribute()>::type start;
 };
 
 } }

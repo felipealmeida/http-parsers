@@ -7,21 +7,47 @@
 
 #include <http-parsers/http/token.hpp>
 
+#include <boost/spirit/home/qi/domain.hpp>
+#include <boost/spirit/home/karma/domain.hpp>
+
+#include <boost/spirit/home/support/common_terminals.hpp>
+#include <boost/spirit/home/support/char_class.hpp>
+
 namespace http_parsers { namespace http {
 
-template <typename Iterator, typename Attribute>
-token<Iterator, Attribute>::token()
-  : token::base_type(start)
+namespace spirit = boost::spirit;
+
+namespace {
+
+template <typename Rule>
+void init_token(spirit::qi::domain, Rule& rule)
 {
-  start %= 
+  rule %=
     +(
-    qi::char_ - (qi::cntrl
-                 | '(' | ')' | '<' | '>' | '@'
-                 | ',' | ';' | ':' | '\\'| '"'
-                 | '/' | '[' | ']' | '?' | '='
-                 | '{' | '}' | ' ' | '\t')
+      spirit::ascii::char_
+      - (spirit::ascii::cntrl
+         | '(' | ')' | '<' | '>' | '@'
+         | ',' | ';' | ':' | '\\'| '"'
+         | '/' | '[' | ']' | '?' | '='
+         | '{' | '}' | ' ' | '\t'
+        )
      )
     ;
+}
+
+template <typename Rule>
+void init_token(spirit::karma::domain, Rule& rule)
+{
+  rule %= spirit::ascii::string;
+}
+
+}
+
+template <typename Domain, typename Iterator, typename Attribute>
+token<Domain, Iterator, Attribute>::token()
+  : token::base_type(start)
+{
+  http::init_token(Domain(), start);
 }
 
 } }

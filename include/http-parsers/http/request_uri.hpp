@@ -9,21 +9,20 @@
 #define HTTP_PARSERS_HTTP_REQUEST_URI_HPP
 
 #include <http-parsers/mime/absolute_uri.hpp>
+#include <http-parsers/mime/relative_uri.hpp>
 
-#include <boost/spirit/home/qi.hpp>
+#include <http-parsers/nonterminal.hpp>
 
 namespace http_parsers { namespace http {
 
-namespace qi = boost::spirit::qi;
-
-template <typename Iterator, typename Attribute>
-struct request_uri : qi::grammar<Iterator, Attribute()>
+template <typename Domain, typename Iterator, typename Attribute>
+struct request_uri : http_parsers::grammar<Domain, Iterator, Attribute()>::type
 {
   request_uri();
 
-  //typedef typename attribute_at_c<Attribute, 0u>::type 
-  qi::rule<Iterator, Attribute()> start;
-  mime::absolute_uri<Iterator, Attribute> absolute_uri;
+  typename http_parsers::rule<Domain, Iterator, Attribute()>::type start;
+  mime::absolute_uri<Domain, Iterator, Attribute> absolute_uri;
+  mime::relative_uri<Domain, Iterator, Attribute> relative_uri;
 };
 
 } }

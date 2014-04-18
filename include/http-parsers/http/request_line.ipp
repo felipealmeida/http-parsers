@@ -9,13 +9,19 @@
 
 namespace http_parsers { namespace http {
 
-template <typename Iterator, typename Attribute>
-request_line<Iterator, Attribute>::request_line()
+template <typename Domain, typename Iterator, typename Attribute>
+request_line<Domain, Iterator, Attribute>::request_line()
   : request_line::base_type(start)
 {
-  start %= qi::raw[token] >> ' ' >> qi::raw[request_uri] >> ' ' >> http_version >> "\r\n";
+  start %= /*raw[*/token//]
+    && ' '
+    && /*raw[*/request_uri//]
+    && ' '
+    && http_version
+    && "\r\n"
+    ;
 
-  start.name("request_line"); debug(start);
+  // start.name("request_line"); debug(start);
 }
 
 } }

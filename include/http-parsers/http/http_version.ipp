@@ -9,11 +9,11 @@
 
 namespace http_parsers { namespace http {
 
-template <typename Iterator, typename Attribute>
-http_version<Iterator, Attribute>::http_version()
+template <typename Domain, typename Iterator, typename Attribute>
+http_version<Domain, Iterator, Attribute>::http_version()
   : http_version::base_type(start)
 {
-  start %= "HTTP/" >> qi::int_ >> '.' >> qi::int_;
+  start %= "HTTP/" && qi::int_ && '.' && qi::int_;
 
   start.name("http_version"); debug(start);
 }
