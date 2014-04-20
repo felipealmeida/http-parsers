@@ -5,6 +5,8 @@
  * http://www.boost.org/LICENSE_1_0.txt)
  */
 
+#include <http-parsers/spirit_logical_and.hpp>
+#include <http-parsers/http/version.hpp>
 #include <http-parsers/http/request_line.hpp>
 #include <http-parsers/http/request_line.ipp>
 #include <http-parsers/http/token.ipp>
@@ -29,13 +31,14 @@ BOOST_AUTO_TEST_CASE(test1)
 
   typedef boost::fusion::vector3<std::string
                                  , std::string
-                                 , boost::fusion::vector2<int, int> >
+                                 , http_parsers::http::version
+                                >
     attribute_type;
   typedef std::back_insert_iterator<std::vector<char> > iterator;
   http_parsers::http::request_line
     <boost::spirit::karma::domain, iterator, attribute_type> request_line;
 
-  attribute_type attribute("GET", "/", boost::fusion::make_vector(1, 1));
+  attribute_type attribute("GET", "/", http_parsers::http::version(1, 1));
   bool b;
   std::vector<char> buffer;
   b = boost::spirit::karma::generate(std::back_inserter(buffer), request_line, attribute);

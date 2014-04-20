@@ -11,5 +11,7 @@ alias http-parsers : /boost//headers : : : <include>include
 alias tests :
  [ run tests/request_line_parser.cpp http-parsers ]
  [ run tests/request_line_generator.cpp http-parsers ]
+ [ run tests/status_line_parser.cpp http-parsers ]
+ [ run tests/headers_parser.cpp http-parsers ]
  ;
 

@@ -5,6 +5,8 @@
  * http://www.boost.org/LICENSE_1_0.txt)
  */
 
+#include <http-parsers/spirit_logical_and.hpp>
+#include <http-parsers/http/version.hpp>
 #include <http-parsers/http/request_line.hpp>
 #include <http-parsers/http/request_line.ipp>
 #include <http-parsers/http/token.ipp>
@@ -28,7 +30,7 @@ BOOST_AUTO_TEST_CASE(test1)
   using boost::fusion::at_c;
 
   typedef boost::fusion::vector<std::string, std::string
-                                , boost::fusion::vector<int, int> >
+                                , http_parsers::http::version>
     attribute_type;
   http_parsers::http::request_line
     <boost::spirit::qi::domain, const char*, attribute_type> request_line;
@@ -48,8 +50,8 @@ BOOST_AUTO_TEST_CASE(test1)
   BOOST_REQUIRE(boost::distance(at_c<1>(attribute)) == 32);
   BOOST_CHECK(std::equal(at_c<1>(attribute).begin(), at_c<1>(attribute).end()
                          , google_uri));
-  BOOST_CHECK(at_c<0>(at_c<2>(attribute)) == 1);
-  BOOST_CHECK(at_c<1>(at_c<2>(attribute)) == 1);
+  BOOST_CHECK(at_c<2>(attribute).major == 1);
+  BOOST_CHECK(at_c<2>(attribute).minor == 1);
 
   at_c<0>(attribute).clear(); at_c<1>(attribute).clear();
 
@@ -64,6 +66,6 @@ BOOST_AUTO_TEST_CASE(test1)
   BOOST_REQUIRE(boost::distance(at_c<1>(attribute)) == 11);
   BOOST_CHECK(std::equal(at_c<1>(attribute).begin(), at_c<1>(attribute).end()
                          , "/index.html"));
-  BOOST_CHECK(at_c<0>(at_c<2>(attribute)) == 1);
-  BOOST_CHECK(at_c<1>(at_c<2>(attribute)) == 1);
+  BOOST_CHECK(at_c<2>(attribute).major == 1);
+  BOOST_CHECK(at_c<2>(attribute).minor == 1);
 }

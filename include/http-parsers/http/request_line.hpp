@@ -12,6 +12,7 @@
 #include <http-parsers/http/request_uri.hpp>
 #include <http-parsers/http/http_version.hpp>
 #include <http-parsers/attribute_at.hpp>
+#include <http-parsers/nonterminal.hpp>
 
 #include <boost/spirit/home/qi.hpp>
 #include <boost/fusion/include/at.hpp>
