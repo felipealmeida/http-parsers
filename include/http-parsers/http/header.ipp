@@ -24,6 +24,7 @@ header<Domain, Iterator, Attribute>::header()
     token
     && spirit::omit[':']
     && field_value
+    && spirit::omit["\r\n"]
     ;
 
   field_value = *(spirit::omit[lws] | field_content)
@@ -31,9 +32,9 @@ header<Domain, Iterator, Attribute>::header()
 
   field_content = +(spirit::ascii::char_ - (spirit::ascii::cntrl | '\r' | '\n'));
 
-  start.name("header"); debug(start);
-  field_value.name("field_value"); debug(field_value);
-  field_content.name("field_content"); debug(field_content);
+  // start.name("header"); debug(start);
+  // field_value.name("field_value"); debug(field_value);
+  // field_content.name("field_content"); debug(field_content);
 }
 
 } }

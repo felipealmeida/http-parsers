@@ -24,7 +24,7 @@ lws<Domain, Iterator, Attribute>::lws()
     && +(spirit::ascii::char_(' ') | '\t')
     ;
 
-  start.name("lws"); debug(start);
+  // start.name("lws"); debug(start);
 }
 
 } }

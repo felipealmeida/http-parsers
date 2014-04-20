@@ -59,9 +59,9 @@ relative_uri<Domain, Iterator, Attribute>::relative_uri()
   fragment = eps(false);
 
   start.name("relative_uri"); debug(start);
-  BOOST_SPIRIT_DEBUG_NODE(path);
-  BOOST_SPIRIT_DEBUG_NODE(query);
-  BOOST_SPIRIT_DEBUG_NODE(fragment);
+  // BOOST_SPIRIT_DEBUG_NODE(path);
+  // BOOST_SPIRIT_DEBUG_NODE(query);
+  // BOOST_SPIRIT_DEBUG_NODE(fragment);
 };
 
 } }

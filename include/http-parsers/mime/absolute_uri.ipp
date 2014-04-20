@@ -11,7 +11,12 @@
 #include <boost/spirit/home/karma/domain.hpp>
 
 #include <boost/spirit/home/support/common_terminals.hpp>
+#include <boost/spirit/home/support/auxiliary/attr_cast.hpp>
 #include <boost/spirit/home/support/char_class.hpp>
+
+#include <boost/spirit/home/karma/numeric.hpp>
+
+#include <boost/spirit/home/phoenix.hpp>
 
 namespace http_parsers { namespace mime {
 
@@ -43,8 +48,20 @@ template <typename Iterator, typename Attribute>
 void init_absolute_uri(spirit::karma::domain
                        , absolute_uri<spirit::karma::domain, Iterator, Attribute>& self)
 {
-  using spirit::lit;
-  self.start %= spirit::ascii::string;
+  namespace karma = spirit::karma;
+  self.start %=
+    *(
+      (
+       spirit::duplicate
+       [
+        &spirit::standard::char_(' ')
+        << spirit::lit('%')
+        << spirit::hex
+       ]
+      )
+      | spirit::ascii::char_
+     )
+    ;
 }
 
 }
@@ -79,13 +96,13 @@ absolute_uri<Domain, Iterator, Attribute>::absolute_uri()
   scheme %= alpha && *(alnum | '+' | '-' | '.');
 
   start.name("absolute_uri"); debug(start);
-  BOOST_SPIRIT_DEBUG_NODE(userinfo);
-  BOOST_SPIRIT_DEBUG_NODE(host);
-  BOOST_SPIRIT_DEBUG_NODE(port);
-  BOOST_SPIRIT_DEBUG_NODE(path);
-  BOOST_SPIRIT_DEBUG_NODE(query);
-  BOOST_SPIRIT_DEBUG_NODE(fragment);
-  BOOST_SPIRIT_DEBUG_NODE(domain_part);
+  // BOOST_SPIRIT_DEBUG_NODE(userinfo);
+  // BOOST_SPIRIT_DEBUG_NODE(host);
+  // BOOST_SPIRIT_DEBUG_NODE(port);
+  // BOOST_SPIRIT_DEBUG_NODE(path);
+  // BOOST_SPIRIT_DEBUG_NODE(query);
+  // BOOST_SPIRIT_DEBUG_NODE(fragment);
+  // BOOST_SPIRIT_DEBUG_NODE(domain_part);
 };
 
 } }

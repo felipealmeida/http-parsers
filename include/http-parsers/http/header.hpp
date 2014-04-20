@@ -15,9 +15,6 @@
 
 namespace http_parsers { namespace http {
 
-namespace qi = boost::spirit::qi;
-namespace fusion = boost::fusion;
-
 template <typename Domain, typename Iterator, typename Attribute>
 struct header : http_parsers::grammar<Domain, Iterator, Attribute()>::type
 {
